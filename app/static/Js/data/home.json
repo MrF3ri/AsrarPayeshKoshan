@@ -1,0 +1,61 @@
+{
+  "home": {
+    "title": "شرکت اسرار پایش کوشان",
+    "urls": [
+      [
+        { "title": "صفحه اصلی", "link": "/Index.html" }
+      ],
+      [
+        "برگه ها",
+        { "title": "جزئیات اخبار", "link": "/News_Details.html" },
+        { "title": "المان ها", "link": "/Component.html" },
+        { "title": "ویژگی ها", "link": "/Features.html" },
+        { "title": "راهنمای استفاده", "link": "/Guide.html" },
+        { "title": "جدول تعرفه", "link": "/Price.html" },
+        { "title": "صفحه 404", "link": "/404.html" }
+      ],
+      [
+        "سایر برگه ها",
+        { "title": "خدمات", "link": "/Service.html" },
+        { "title": "ثبت موفق", "link": "/Success.html" },
+        { "title": "ثبت ناموفق", "link": "/UnSuccess.html" },
+        { "title": "صفحه انتظار", "link": "/Waiting.html" },
+        { "title": "صفحه خالی", "link": "/Blank.html" }
+      ],
+      [
+        { "title": "درباره ما", "link": "/AboutUs.html" }
+      ],
+      [
+        { "title": "ارتباط با ما", "link": "/ContactUs.html" }
+      ]
+    ],
+    "footer": {
+      "latest": [
+        { "title": "اجرای قانون پایانه های فروشگاهی", "link": "/Ourteam.html" },
+        { "title": "رونمایی سامانه مالیات نقل و انتقال خودرو", "link": "/News.html" },
+        { "title": "افزایش حقوق معلمان", "link": "/News_Details.html" },
+        { "title": "فرصت دوباره فعال سازی پذیرنده های بانک", "link": "/Component.html" }
+      ],
+      "quickLinks": [
+        { "title": "مدیران و معاونان", "link": "/Ourteam.html" },
+        { "title": "اخبار و رویدادها", "link": "/News.html" },
+        { "title": "جزئیات اخبار", "link": "/News_Details.html" },
+        { "title": "المان ها", "link": "/Component.html" },
+        { "title": "ویژگی ها", "link": "/Features.html" }
+      ],
+      "links": [
+        { "title": "سوالات متداول", "link": "/Faq.html" },
+        { "title": "ورود", "link": "/Login.html" },
+        { "title": "عضویت", "link": "/Register.html" },
+        { "title": "درباره ما", "link": "/AboutUs.html" },
+        { "title": "تماس با ما", "link": "/ContactUs.html" }
+      ],
+      "contact": {
+        "address": "شهرستان گنبدکاووس - خیابان آزادگان - میدان فراغی",
+        "phone": "01733224455",
+        "mobile": "09301234567",
+        "fax": "09301234567"
+      }
+    }
+  }
+}

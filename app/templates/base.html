@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <title id="page-title">بارگذاری...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="{{ url_for('static', filename='Css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='Css/bootstrap-rtl.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='Css/Style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='Css/sina-nav.min.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/owl-carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/owl-carousel/owl.theme.default.min.css') }}">
+</head>
+
+<body id="home">
+
+    <!-- بالای صفحه -->
+    <section id="tophead" class="container-fluid p-2 grad-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-sm-5 d-lg-block d-none">
+                    <a href="#"><img src="{{ url_for('static', filename='Images/logo2.png') }}" class="img-fluid" /></a>
+                </div>
+                <div class="col-lg-3 text-center align-items-center d-flex">
+                    <span class="text-white" id="today-date"></span>
+                </div>
+                <div class="col-lg-1 col-6 text-left mb-3">
+                    <img src="{{ url_for('static', filename='Images/flag.png') }}" class="pt-sm-4 flag img-fluid" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- منو -->
+    <header class="nav-container">
+        <nav class="sina-nav mobile-sidebar navbar-fixed" data-top="60">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="sina-menu sina-menu-center" id="menu-list">
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block container %}{% endblock %}
+
+    <!-- فوتر -->
+    <footer class="rel-footer">
+        <div id="footer-content">
+            <div class="container">
+                <div class="row pt-4 mx-2" id="footer-dynamic">
+
+                </div>
+            </div>
+        </div>
+        <div id="footer-copyright">
+            <div class="container text-center">
+                <a href="#" class="text-white">کلیه حقوق این قالب برای طراح محفوظ می باشد.</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="{{ url_for('static', filename='Js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/sina-nav.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/owl.carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/page/home.js') }}"></script>
+    <script>
+$(document).ready(function(){
+    $("#owl-slider").owlCarousel({
+        items: 1,
+        loop: true,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true
+    });
+
+    $("#owl-Service").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        dots: true,
+        responsive: {
+            0: { items: 1 },       // موبایل
+            576: { items: 2 },     // موبایل بزرگ
+            768: { items: 3 },     // تبلت
+            992: { items: 4 },     // دسکتاپ کوچک
+            1200: { items: 5 }     // دسکتاپ بزرگ
+        }
+    });
+    
+    $("#owl-topnews").owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        responsive: {
+            0: { items: 1 },       // موبایل
+            576: { items: 2 },     // موبایل بزرگ
+            768: { items: 3 },     // تبلت
+            992: { items: 4 },     // دسکتاپ کوچک
+            1200: { items: 5 }     // دسکتاپ بزرگ
+        }
+    });
+});
+
+    </script>
+
+
+</body>
+</html>

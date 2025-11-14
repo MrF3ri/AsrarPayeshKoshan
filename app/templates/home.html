@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<section class="container mt-3">
+    <div class="row">
+        <!-- ستون سمت چپ: بنرها -->
+        <div class="col-lg-3 card pt-2 order-lg-1 order-2 text-center">
+            <div class="container">
+                <div class="row Qlink">
+                    <div class="col-lg-12 pt-lg-2">
+                        <img src="{{ url_for('static', filename='Images/head.png') }}" class="mx-auto text-center img-fluid" />
+                    </div>
+
+                    {% for banner in banners %}
+                        <div class="col-lg-12 col-md-3 col-6 my-md-2 my-1">
+                            <a href="{{ banner.link or '#' }}">
+                                <img src="{{ url_for('static', filename=banner.image_url) }}" class="img-fluid rad12">
+                            </a>
+                        </div>
+                    {% endfor %}
+
+                    <div class="col-lg-12">
+                        <img src="{{ url_for('static', filename='Images/foot.png') }}" class="mx-auto img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ستون سمت راست: اسلایدر -->
+        <div class="col-lg-9 mb-lg-0 mb-3 order-lg-2 order-1">
+            <div id="owl-slider" class="owl-carousel">
+                {% for slide in sliders %}
+                    <div class="item">
+                        <a href="{{ slide.link or '#' }}">
+                            <img src="{{ url_for('static', filename=slide.image_url) }}" alt="{{ slide.title or 'slide' }}" class="img-fluid" />
+                            <div class="caption">
+                                {% if slide.title %}
+                                    <span class="SlideCategori position-absolute bg-danger px-3">
+                                        {{ slide.title }}
+                                    </span>
+                                {% endif %}
+                                {% if slide.description %}
+                                    <p>{{ slide.description }}</p>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-4 text-center">
+    <h5 class="IRANSansWeb_Medium  bt-color">خدمات ما</h5>
+    <p>کلیه خدمات قابل ارائه لورم ایپسوم از صنعت چاپ </p>
+    <div id="owl-Service" class="owl-carousel">
+
+        {% for servic in services %}
+            <div class="card mx-2 my-3">
+                <div class="card-body">
+                    <a href="{{ servic.detail_link or '#' }}">
+                        <img class="rounded-circle" src="{{ url_for('static', filename=servic.image_url) }}" alt="">
+                    </a>
+                    <h6>{{servic.title}}</h6>
+                    <p>{{servic.short_description}}</p>
+                    <a href="{{ servic.detail_link or '#' }}" class="btn btn-grad px-5 text-white mt-2 rad25">مشاهده</a>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<section class="container  Nlist wt_box mt-5 relative">
+
+
+    <div class="row">
+
+        <div class="col-lg-9 bx-nws card mb-3">
+            <div class="widget-title">
+                <h1>اخبار مرکز و استان ها</h1>
+            </div>
+            <div class="bg-white  m-0 p-2">
+
+                <ul>
+
+                    {% for new in news_list %}
+                        <li>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3">
+                                    <a href="{{ new.attachment_url or '#' }}"><img src="{{ url_for('static', filename=new.image_url) }}" class="img-fluid"></a>
+                                </div>
+                                <div class="col-lg-10 col-md-9">
+                                    <a href="{{ new.attachment_url or '#' }}">
+                                        <h2>
+                                            {{ new.title }}
+                                        </h2>
+                                    </a>
+                                    <p>
+                                        {{ new.short_description | truncate(180, False, '...') }}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <div class="d-flex flex-row tttt justify-content-between pb-2 px-3">
+                    <div>
+                        « نمایش {{ news_list|length if news_list|length <= 4 else 4 }} از کل »
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 d-lg-block d-none">
+            <a href="#"><img src="{{ url_for('static', filename='Images/emono1.jpeg') }}" class="img-fluid rad12 mb-3"></a>
+            <a href="#"><img src="{{ url_for('static', filename='Images/event01.jpg') }}" class="img-fluid rad12 mb-3"></a>
+        </div>
+    </div>
+
+</section>
+
+<section class="container mt-5">
+    <h5 class="IRANSansWeb_Medium text-center bt-color">آخرین اخبار و رویدادها</h5>
+    <div id="owl-topnews" class="owl-carousel mt-3 text-center">
+
+        {% for new in news_list %}
+            <div class="card my-3 mx-2">
+                <a href="{{ new.attachment_url or '#' }}" class="relative">
+                    <img src="{{ url_for('static', filename=new.image_url) }}" class="mb-3 img-fluid rad12" />
+                    <div class="covernews d-flex flex-row justify-content-between px-3 text-white IRANSansWeb_Medium ">
+                        <span class="bottom_p"><i class="fas fa-clock ml-1"></i>{{ new.published_date.strftime('%Y/%m/%d') }}</span>
+                        <span><i class="fas fa-eye ml-1"></i>{{ new.views }} بار</span>
+                    </div>
+                </a>
+
+                <a href="{{ new.attachment_url or '#' }}">
+                    <h2>{{ new.title }}</h2>
+                </a>
+                <p>{{ new.short_description | truncate(180, False, '...') }}</p>
+
+                <a href="{{ new.attachment_url or '#' }}" class="text-danger IRANSansWeb_Medium mb-3">مشاهده خبر »</a>
+            </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+
+
+{% endblock %}
