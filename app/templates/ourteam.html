@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block container %}
+<section class="container mt-3">
+    <div class="row">
+        <div class="col-lg-12">
+            <nav aria-label="breadcrumb ">
+                <ol class="breadcrumb mb-0 rad25">
+                    <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">مدیران و معاونان</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid mt-3 pb-5">
+    <div class="container p-md-5 box p-4 bg-page">
+        <h5 class="mb-4 bt-color IRANSansWeb_Medium">مدیران و معاونان</h5>
+        <p>ما معتقدیم تعامل برند مهم در برقراری ارتباط است. نوآوری های واقعی و یک تجربه مثبت مشتری قلب ارتباطات موفق
+                است. نوآوری های واقعی و یک تجربه مثبت مشتری قلب ارتباطات موفق است.یک تجربه مثبت مشتری قلب ارتباطات موفق
+                است. ما معتقدیم تعامل برند مهم در برقراری ارتباط است. نوآوری های واقعی و یک تجربه مثبت مشتری قلب
+                ارتباطات موفق است. نوآوری های واقعی و یک تجربه مثبت مشتری قلب ارتباطات موفق است.یک تجربه مثبت مشتری قلب
+                ارتباطات موفق است.
+        </p>
+        <div class="row">
+            {% for member in team_members %}
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename=member.image_url) }}" alt="{{ member.name }}" />
+                    <div class="data">
+                        <h6 class="IRANSansWeb_Medium">{{ member.name }}</h6>
+                        <span>{{ member.position }}</span>
+                        <hr />
+                        <p class="text-center">راه های ارتباطی با {{ member.position }}</p>
+                        {% for contact in member.contacts %}
+                            {% if contact.type == 'whatsapp' %}
+                                <a href="{{ contact.value }}"><i class="fab fa-2x fa-whatsapp rounded text-success"></i></a>
+                            {% elif contact.type == 'telegram' %}
+                                <a href="{{ contact.value }}"><i class="fab fa-2x fa-telegram rounded text-info"></i></a>
+                            {% elif contact.type == 'email' %}
+                                <a href="mailto:{{ contact.value }}"><i class="fas fa-2x fa-envelope rounded text-danger"></i></a>
+                            {% elif contact.type == 'phone' %}
+                                <a href="tel:{{ contact.value }}"><i class="fas fa-2x fa-phone rounded text-primary"></i></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

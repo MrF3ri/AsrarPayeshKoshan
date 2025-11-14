@@ -20,5 +20,6 @@ def Home():
         news_list=news_list,
         team=team,
         branches=branches,
-        related_links=related_links    
+        related_links=related_links,
+        page_id="home"
     )

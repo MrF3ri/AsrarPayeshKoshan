@@ -27,46 +27,6 @@ fetch('/static/Js/data/home.json')
         // عنوان صفحه
         document.getElementById("page-title").innerText = data.home.title;
 
-        // پر کردن منو
-        const menuList = document.getElementById("menu-list");
-        data.home.urls.forEach(item => {
-            if (item.length > 1) {
-                // منوی کشویی
-                const li = document.createElement("li");
-                li.classList.add("dropdown");
-
-                const a = document.createElement("a");
-                a.href = "#";
-                a.classList.add("dropdown-toggle");
-                a.setAttribute("data-toggle", "dropdown");
-                a.innerHTML = item[0];
-                li.appendChild(a);
-
-                const ul = document.createElement("ul");
-                ul.classList.add("dropdown-menu");
-
-                for (let i = 1; i < item.length; i++) {
-                    const liSub = document.createElement("li");
-                    const aSub = document.createElement("a");
-                    aSub.href = item[i].link;
-                    aSub.textContent = item[i].title;
-                    liSub.appendChild(aSub);
-                    ul.appendChild(liSub);
-                }
-
-                li.appendChild(ul);
-                menuList.appendChild(li);
-            } else {
-                // منوی ساده
-                const li = document.createElement("li");
-                const a = document.createElement("a");
-                a.href = item[0].link;
-                a.textContent = item[0].title;
-                li.appendChild(a);
-                menuList.appendChild(li);
-            }
-        });
-
         // پر کردن فوتر
         const footerContainer = document.getElementById("footer-dynamic");
 
