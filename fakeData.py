@@ -4,8 +4,10 @@ from app import create_app, db
 from app.models import (
     News, Service, TeamMember, TeamContact,
     RelatedLink, Slider, Banner,
-    CompanyBranch, CompanySocial
+    CompanyBranch, CompanySocial,
+    AboutCompany, CompanyStat, CompanyCertificate, PageSEO
 )
+
 
 app = create_app()
 app.app_context().push()
@@ -151,6 +153,81 @@ def seed_company_branches():
         ]
         db.session.add_all(socials)
 
+def seed_about_company():
+    about = AboutCompany(
+        company_name="شرکت اسرار پایش کوشان",
+        slogan="پایش هوشمند، امنیت پایدار",
+
+        short_description="شرکت اسرار پایش کوشان فعال در حوزه پایش، امنیت و فناوری اطلاعات.",
+        full_description="""
+شرکت اسرار پایش کوشان با تمرکز بر ارائه راهکارهای نوین در حوزه امنیت سایبری،
+پایش زیرساخت‌ها و خدمات فناوری اطلاعات، فعالیت خود را آغاز کرده و تاکنون
+پروژه‌های متعددی را در سطح سازمانی اجرا نموده است.
+        """,
+
+        mission="ارائه راهکارهای امن، پایدار و قابل اعتماد برای سازمان‌ها.",
+        vision="تبدیل شدن به یکی از شرکت‌های پیشرو در حوزه امنیت و پایش در کشور.",
+        values="امنیت، اعتماد، کیفیت، نوآوری",
+
+        founded_year=1398,
+        registration_number="123456",
+        national_id="14001234567",
+
+        logo_url="Images/logo.png",
+        about_image_url="Images/about.jpg",
+
+        active=True
+    )
+    db.session.add(about)
+
+
+def seed_company_stats():
+    stats = [
+        {"title": "پروژه انجام‌شده", "value": "+120", "icon": "briefcase"},
+        {"title": "مشتری فعال", "value": "+45", "icon": "users"},
+        {"title": "سال تجربه", "value": "+6", "icon": "calendar"},
+        {"title": "نیروی متخصص", "value": "+25", "icon": "shield"}
+    ]
+
+    for i, stat in enumerate(stats):
+        db.session.add(
+            CompanyStat(
+                title=stat["title"],
+                value=stat["value"],
+                icon=stat["icon"],
+                display_order=i + 1,
+                active=True
+            )
+        )
+
+def seed_company_certificates():
+    certs = [
+        ("گواهینامه ISO 27001", "TÜV", 2022),
+        ("گواهینامه ISO 9001", "SGS", 2021),
+        ("مجوز افتا", "مرکز افتا", 2023)
+    ]
+
+    for i, (title, issuer, year) in enumerate(certs):
+        db.session.add(
+            CompanyCertificate(
+                title=title,
+                issuer=issuer,
+                issue_year=year,
+                image_url="Images/cert.png",
+                description="توضیحات تستی درباره این گواهینامه.",
+                display_order=i + 1,
+                active=True
+            )
+        )
+
+def seed_page_seo():
+    seo = PageSEO(
+        page_key="about",
+        meta_title="درباره ما | شرکت اسرار پایش کوشان",
+        meta_description="معرفی شرکت اسرار پایش کوشان، فعال در حوزه امنیت و پایش.",
+        meta_keywords="امنیت سایبری، پایش، اسرار پایش کوشان"
+    )
+    db.session.add(seo)
 
 # ---------------------------------------------------
 # اجرای نهایی سِید
@@ -166,10 +243,14 @@ def main():
     seed_banners()
     seed_company_branches()
 
+    # --- ABOUT PAGE ---
+    seed_about_company()
+    seed_company_stats()
+    seed_company_certificates()
+    seed_page_seo()
+
     db.session.commit()
-
     print("✅ عملیات با موفقیت انجام شد! Fake data با موفقیت وارد دیتابیس شد.")
-
 
 if __name__ == "__main__":
     main()

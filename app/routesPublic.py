@@ -1,49 +1,43 @@
 from flask import Blueprint, jsonify
-from .models import Slider, Banner, News, Service, TeamMember, RelatedLink, CompanyBranch
-from . import db
+from .models import (
+    Slider, Banner, News, Service,
+    TeamMember, RelatedLink, CompanyBranch
+)
 
-public = Blueprint("public", __name__)
+public = Blueprint("public", __name__, url_prefix="/api")
 
-# -----------------------
-# SLIDERS
-# -----------------------
 @public.get("/sliders")
 def get_sliders():
-    sliders = Slider.query.filter_by(active=True).order_by(Slider.display_order).all()
+    sliders = Slider.query.filter_by(active=True) \
+        .order_by(Slider.display_order).all()
+
     return jsonify([
         {
             "id": s.id,
             "title": s.title,
             "image_url": s.image_url,
             "link": s.link
-        }
-        for s in sliders
+        } for s in sliders
     ])
 
-
-# -----------------------
-# BANNERS
-# -----------------------
 @public.get("/banners")
 def get_banners():
     banners = Banner.query.filter_by(active=True).all()
+
     return jsonify([
         {
             "id": b.id,
             "title": b.title,
             "image_url": b.image_url,
             "link": b.link
-        }
-        for b in banners
+        } for b in banners
     ])
 
-
-# -----------------------
-# NEWS
-# -----------------------
 @public.get("/news")
 def get_news():
-    news = News.query.filter_by(active=True).order_by(News.published_date.desc()).all()
+    news_list = News.query.filter_by(active=True) \
+        .order_by(News.published_date.desc()).all()
+
     return jsonify([
         {
             "id": n.id,
@@ -53,17 +47,13 @@ def get_news():
             "attachment_url": n.attachment_url,
             "published_date": n.published_date.isoformat(),
             "views": n.views
-        }
-        for n in news
+        } for n in news_list
     ])
 
-
-# -----------------------
-# SERVICES
-# -----------------------
 @public.get("/services")
 def get_services():
     services = Service.query.filter_by(active=True).all()
+
     return jsonify([
         {
             "id": s.id,
@@ -71,17 +61,14 @@ def get_services():
             "short_description": s.short_description,
             "image_url": s.image_url,
             "detail_link": s.detail_link
-        }
-        for s in services
+        } for s in services
     ])
 
-
-# -----------------------
-# TEAM MEMBERS + CONTACTS
-# -----------------------
 @public.get("/team")
 def get_team():
-    team = TeamMember.query.filter_by(active=True).order_by(TeamMember.display_order).all()
+    team = TeamMember.query.filter_by(active=True) \
+        .order_by(TeamMember.display_order).all()
+
     return jsonify([
         {
             "id": t.id,
@@ -92,20 +79,15 @@ def get_team():
                 {
                     "type": c.type,
                     "value": c.value
-                }
-                for c in t.contacts
+                } for c in t.contacts
             ]
-        }
-        for t in team
+        } for t in team
     ])
 
-
-# -----------------------
-# RELATED LINKS
-# -----------------------
 @public.get("/related-links")
 def get_related_links():
     links = RelatedLink.query.filter_by(active=True).all()
+
     return jsonify([
         {
             "id": l.id,
@@ -113,17 +95,13 @@ def get_related_links():
             "description": l.description,
             "url": l.url,
             "image_url": l.image_url
-        }
-        for l in links
+        } for l in links
     ])
 
-
-# -----------------------
-# COMPANY BRANCHES + SOCIALS
-# -----------------------
 @public.get("/branches")
 def get_branches():
     branches = CompanyBranch.query.filter_by(active=True).all()
+
     return jsonify([
         {
             "id": b.id,
@@ -137,9 +115,7 @@ def get_branches():
                 {
                     "type": s.type,
                     "url": s.url
-                }
-                for s in b.social_links
+                } for s in b.social_links
             ]
-        }
-        for b in branches
+        } for b in branches
     ])

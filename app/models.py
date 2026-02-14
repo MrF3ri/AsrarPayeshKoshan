@@ -47,7 +47,6 @@ class TeamContact(db.Model):
     type = db.Column(db.String(50))  # email, phone, linkedin
     value = db.Column(db.String(255))
 
-
 class RelatedLink(db.Model):
     __tablename__ = "related_links"
     id = db.Column(db.Integer, primary_key=True)
@@ -57,7 +56,6 @@ class RelatedLink(db.Model):
     image_url = db.Column(db.String(255))
     active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
 
 class Slider(db.Model):
     __tablename__ = "sliders"
@@ -69,8 +67,6 @@ class Slider(db.Model):
     display_order = db.Column(db.Integer, default=0)
     active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
-
 class Banner(db.Model):
     __tablename__ = "banners"
     id = db.Column(db.Integer, primary_key=True)
@@ -79,7 +75,6 @@ class Banner(db.Model):
     link = db.Column(db.String(255))
     active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
 
 class CompanyBranch(db.Model):
     __tablename__ = "company_branches"
@@ -100,3 +95,72 @@ class CompanySocial(db.Model):
     branch_id = db.Column(db.Integer, db.ForeignKey('company_branches.id'))
     type = db.Column(db.String(50))  # instagram, linkedin, twitter, ...
     url = db.Column(db.String(255))
+
+class AboutCompany(db.Model):
+    __tablename__ = "about_company"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    company_name = db.Column(db.String(255), nullable=False)
+    slogan = db.Column(db.String(255))
+
+    short_description = db.Column(db.Text)
+    full_description = db.Column(db.Text)
+
+    mission = db.Column(db.Text)
+    vision = db.Column(db.Text)
+    values = db.Column(db.Text)  # لیست ارزش‌ها (متن ساده یا JSON-string)
+
+    founded_year = db.Column(db.Integer)
+    registration_number = db.Column(db.String(100))
+    national_id = db.Column(db.String(100))
+
+    logo_url = db.Column(db.String(255))
+    about_image_url = db.Column(db.String(255))
+
+    active = db.Column(db.Boolean, default=True)
+
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    updated_at = db.Column(
+        db.DateTime,
+        default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp()
+    )
+
+class CompanyStat(db.Model):
+    __tablename__ = "company_stats"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)  # مثال: پروژه‌ها
+    value = db.Column(db.String(50), nullable=False)  # مثال: +120
+    icon = db.Column(db.String(100))  # optional (css class / icon name)
+
+    display_order = db.Column(db.Integer, default=0)
+    active = db.Column(db.Boolean, default=True)
+
+class CompanyCertificate(db.Model):
+    __tablename__ = "company_certificates"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    title = db.Column(db.String(255), nullable=False)
+    issuer = db.Column(db.String(255))
+    issue_year = db.Column(db.Integer)
+
+    image_url = db.Column(db.String(255))
+    description = db.Column(db.Text)
+
+    display_order = db.Column(db.Integer, default=0)
+    active = db.Column(db.Boolean, default=True)
+
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+class PageSEO(db.Model):
+    __tablename__ = "page_seo"
+
+    id = db.Column(db.Integer, primary_key=True)
+    page_key = db.Column(db.String(50), unique=True)  # مقدار: "about"
+
+    meta_title = db.Column(db.String(255))
+    meta_description = db.Column(db.String(500))
+    meta_keywords = db.Column(db.String(500))
