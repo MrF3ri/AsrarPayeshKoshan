@@ -4,7 +4,7 @@ from .models import (
     TeamMember, RelatedLink, CompanyBranch
 )
 
-public = Blueprint("public", __name__, url_prefix="/api")
+public = Blueprint("public", __name__)
 
 @public.get("/sliders")
 def get_sliders():

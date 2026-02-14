@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block container %}
+<section class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('routeapi.home') }}">صفحه اصلی</a></li>
+      <li class="breadcrumb-item active">جزئیات خبر</li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card p-3">
+        <h3>{{ news.title }}</h3>
+        <p class="text-muted">تاریخ انتشار: {{ news.published_date.strftime('%Y/%m/%d') }} | بازدید: {{ news.views }}</p>
+        {% if news.image_url %}
+        <img src="{{ url_for('static', filename=news.image_url) }}" class="img-fluid rad12 mb-3" alt="{{ news.title }}">
+        {% endif %}
+        <p>{{ news.full_description or news.short_description }}</p>
+        {% if news.attachment_url %}
+        <a class="btn btn-outline-primary" href="{{ news.attachment_url }}" target="_blank">مشاهده فایل پیوست</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card p-3">
+        <h5>آخرین اخبار</h5>
+        <ul class="list-group list-group-flush">
+          {% for item in latest_news %}
+          <li class="list-group-item">
+            <a href="{{ url_for('routeapi.news_detail', news_id=item.id) }}">{{ item.title }}</a>
+          </li>
+          {% else %}
+          <li class="list-group-item">خبر دیگری موجود نیست.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

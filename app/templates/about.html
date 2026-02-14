@@ -61,6 +61,7 @@
                     درباره {{ about.company_name }}
                 </h5>
 
+                {% if about.slogan %}<h6>{{ about.slogan }}</h6>{% endif %}
                 {% if about.short_description %}
                 <p>{{ about.short_description }}</p>
                 {% endif %}
@@ -105,6 +106,10 @@
                 <p>{{ about.vision }}</p>
                 {% endif %}
 
+                {% if about.values %}
+                <p><strong>ارزش‌ها:</strong> {{ about.values }}</p>
+                {% endif %}
+
             </div>
 
             {% if about.about_image_url %}
@@ -126,6 +131,7 @@
                     <i class="fas fa-certificate certificate-icon"></i>
                     {% endif %}
                     <p class="certificate-value">{{ cert.title }}</p>
+                    {% if cert.issuer %}<small>{{ cert.issuer }} - {{ cert.issue_year }}</small>{% endif %}
                 </a>
                 {% endfor %}
             </div>

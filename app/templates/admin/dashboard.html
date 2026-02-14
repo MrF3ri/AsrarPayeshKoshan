@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block container %}
+<section class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>پنل مدیریت محتوا</h3>
+    <a href="{{ url_for('routeapi.admin_logout') }}" class="btn btn-outline-danger">خروج</a>
+  </div>
+
+  <div class="card p-3 mb-4">
+    <h5>درباره ما</h5>
+    <form method="post" action="{{ url_for('routeapi.admin_about_save') }}">
+      <div class="row">
+        <div class="col-md-6 form-group"><input class="form-control" name="company_name" placeholder="نام شرکت" value="{{ about_item.company_name if about_item else '' }}"></div>
+        <div class="col-md-6 form-group"><input class="form-control" name="slogan" placeholder="شعار" value="{{ about_item.slogan if about_item else '' }}"></div>
+        <div class="col-md-12 form-group"><textarea class="form-control" name="short_description" placeholder="توضیح کوتاه">{{ about_item.short_description if about_item else '' }}</textarea></div>
+        <div class="col-md-12 form-group"><textarea class="form-control" name="full_description" placeholder="توضیح کامل">{{ about_item.full_description if about_item else '' }}</textarea></div>
+        <div class="col-md-6 form-group"><input class="form-control" name="logo_url" placeholder="مسیر لوگو" value="{{ about_item.logo_url if about_item else '' }}"></div>
+        <div class="col-md-6 form-group"><input class="form-control" name="about_image_url" placeholder="مسیر تصویر about" value="{{ about_item.about_image_url if about_item else '' }}"></div>
+      </div>
+      <button class="btn btn-success">ذخیره درباره ما</button>
+    </form>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card p-3 mb-4">
+        <h5>ثبت خبر</h5>
+        <form method="post" action="{{ url_for('routeapi.admin_news_save') }}">
+          <input class="form-control mb-2" name="title" placeholder="عنوان" required>
+          <input class="form-control mb-2" type="date" name="published_date" required>
+          <input class="form-control mb-2" name="image_url" placeholder="مسیر تصویر">
+          <textarea class="form-control mb-2" name="short_description" placeholder="توضیح کوتاه"></textarea>
+          <textarea class="form-control mb-2" name="full_description" placeholder="توضیح کامل"></textarea>
+          <button class="btn btn-primary">ثبت خبر</button>
+        </form>
+        <hr>
+        {% for item in news_items %}
+        <div class="d-flex justify-content-between border-bottom py-2">
+          <a href="{{ url_for('routeapi.news_detail', news_id=item.id) }}">{{ item.title }}</a>
+          <form method="post" action="{{ url_for('routeapi.admin_news_delete', item_id=item.id) }}">
+            <button class="btn btn-sm btn-danger">حذف</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card p-3 mb-4">
+        <h5>ثبت خدمت</h5>
+        <form method="post" action="{{ url_for('routeapi.admin_services_save') }}">
+          <input class="form-control mb-2" name="title" placeholder="عنوان" required>
+          <input class="form-control mb-2" name="image_url" placeholder="مسیر تصویر">
+          <textarea class="form-control mb-2" name="short_description" placeholder="توضیح کوتاه"></textarea>
+          <textarea class="form-control mb-2" name="full_description" placeholder="توضیح کامل"></textarea>
+          <button class="btn btn-primary">ثبت خدمت</button>
+        </form>
+        <hr>
+        {% for item in service_items %}
+        <div class="d-flex justify-content-between border-bottom py-2">
+          <a href="{{ url_for('routeapi.service_detail', service_id=item.id) }}">{{ item.title }}</a>
+          <form method="post" action="{{ url_for('routeapi.admin_services_delete', item_id=item.id) }}">
+            <button class="btn btn-sm btn-danger">حذف</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-3 mb-4">
+    <h5>داده‌های صفحه اصلی (اسلایدر/بنر/تیم/لینک/شعب/آمار/گواهی)</h5>
+    <p class="text-muted">برای هر بخش یک رکورد جدید اضافه کنید.</p>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <form method="post" action="{{ url_for('routeapi.admin_simple_save', section='sliders') }}" class="border p-2">
+          <strong>اسلایدر</strong>
+          <input class="form-control mt-2" name="title" placeholder="عنوان">
+          <input class="form-control mt-2" name="image_url" placeholder="مسیر تصویر" required>
+          <input class="form-control mt-2" name="link" placeholder="لینک">
+          <button class="btn btn-sm btn-success mt-2">افزودن</button>
+        </form>
+      </div>
+      <div class="col-md-4 mb-3">
+        <form method="post" action="{{ url_for('routeapi.admin_simple_save', section='banners') }}" class="border p-2">
+          <strong>بنر</strong>
+          <input class="form-control mt-2" name="title" placeholder="عنوان">
+          <input class="form-control mt-2" name="image_url" placeholder="مسیر تصویر" required>
+          <input class="form-control mt-2" name="link" placeholder="لینک">
+          <button class="btn btn-sm btn-success mt-2">افزودن</button>
+        </form>
+      </div>
+      <div class="col-md-4 mb-3">
+        <form method="post" action="{{ url_for('routeapi.admin_simple_save', section='team') }}" class="border p-2">
+          <strong>تیم</strong>
+          <input class="form-control mt-2" name="name" placeholder="نام" required>
+          <input class="form-control mt-2" name="position" placeholder="سمت">
+          <input class="form-control mt-2" name="image_url" placeholder="مسیر تصویر">
+          <button class="btn btn-sm btn-success mt-2">افزودن</button>
+        </form>
+      </div>
+      <div class="col-md-4 mb-3">
+        <form method="post" action="{{ url_for('routeapi.admin_simple_save', section='links') }}" class="border p-2">
+          <strong>لینک مرتبط</strong>
+          <input class="form-control mt-2" name="title" placeholder="عنوان">
+          <input class="form-control mt-2" name="url" placeholder="آدرس" required>
+          <button class="btn btn-sm btn-success mt-2">افزودن</button>
+        </form>
+      </div>
+      <div class="col-md-4 mb-3">
+        <form method="post" action="{{ url_for('routeapi.admin_simple_save', section='branches') }}" class="border p-2">
+          <strong>شعبه</strong>
+          <input class="form-control mt-2" name="name" placeholder="نام شعبه">
+          <input class="form-control mt-2" name="address" placeholder="آدرس">
+          <input class="form-control mt-2" name="phone" placeholder="تلفن">
+          <button class="btn btn-sm btn-success mt-2">افزودن</button>
+        </form>
+      </div>
+      <div class="col-md-4 mb-3">
+        <form method="post" action="{{ url_for('routeapi.admin_simple_save', section='stats') }}" class="border p-2">
+          <strong>آمار</strong>
+          <input class="form-control mt-2" name="title" placeholder="عنوان">
+          <input class="form-control mt-2" name="value" placeholder="مقدار">
+          <button class="btn btn-sm btn-success mt-2">افزودن</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-3 mb-4">
+    <h5>پیام‌های تماس</h5>
+    {% for msg in contact_messages %}
+    <div class="border p-2 mb-2">
+      <strong>{{ msg.full_name }}</strong> - {{ msg.email }}
+      <p class="mb-1">{{ msg.subject }}</p>
+      <small>{{ msg.message }}</small>
+      <form method="post" action="{{ url_for('routeapi.admin_simple_delete', section='messages', item_id=msg.id) }}" class="mt-2">
+        <button class="btn btn-sm btn-danger">حذف پیام</button>
+      </form>
+    </div>
+    {% else %}
+    <p>پیامی ثبت نشده است.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
