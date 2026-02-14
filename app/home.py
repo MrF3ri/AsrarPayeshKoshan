@@ -1,5 +1,7 @@
 from flask import render_template
-from .models import Slider, Banner, Service, News, TeamMember, CompanyBranch, RelatedLink
+
+from .models import Banner, CompanyBranch, News, RelatedLink, Service, Slider, TeamMember
+
 
 def Home():
     sliders = Slider.query.filter_by(active=True).order_by(Slider.display_order).all()
@@ -9,9 +11,7 @@ def Home():
     team = TeamMember.query.filter_by(active=True).order_by(TeamMember.display_order).all()
     branches = CompanyBranch.query.filter_by(active=True).all()
     related_links = RelatedLink.query.filter_by(active=True).all()
-    print(sliders[0].image_url)
-    print(banners)
-    print("=========================")
+
     return render_template(
         "home.html",
         sliders=sliders,
@@ -21,5 +21,5 @@ def Home():
         team=team,
         branches=branches,
         related_links=related_links,
-        page_id="home"
+        page_id="home",
     )

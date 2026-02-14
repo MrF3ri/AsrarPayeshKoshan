@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block container %}
+<section class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('routeapi.home') }}">صفحه اصلی</a></li>
+      <li class="breadcrumb-item active">جزئیات خدمت</li>
+    </ol>
+  </nav>
+  <div class="card p-4 mb-4">
+    <div class="row align-items-center">
+      <div class="col-lg-3">
+        {% if service.image_url %}
+        <img src="{{ url_for('static', filename=service.image_url) }}" class="img-fluid rounded-circle" alt="{{ service.title }}">
+        {% endif %}
+      </div>
+      <div class="col-lg-9">
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.full_description or service.short_description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="mb-3">سایر خدمات</h5>
+  <div class="row">
+    {% for item in related_services %}
+    <div class="col-md-4 mb-3">
+      <div class="card p-3 h-100">
+        <h6>{{ item.title }}</h6>
+        <p>{{ item.short_description }}</p>
+        <a href="{{ url_for('routeapi.service_detail', service_id=item.id) }}">مشاهده</a>
+      </div>
+    </div>
+    {% else %}
+    <div class="col-12"><p>خدمت دیگری موجود نیست.</p></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

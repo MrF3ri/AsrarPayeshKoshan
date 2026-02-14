@@ -1,4 +1,3 @@
-// نمایش تاریخ شمسی
 function gregorianToJalali(gy, gm, gd) {
     var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
     var jy = (gy <= 1600) ? 0 : 979;
@@ -14,80 +13,58 @@ function gregorianToJalali(gy, gm, gd) {
     return [jy, jm, jd_day];
 }
 
-const today = new Date();
-const jalali = gregorianToJalali(today.getFullYear(), today.getMonth() + 1, today.getDate());
-const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-const weekdays = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
-const dayName = weekdays[today.getDay()];
-document.getElementById("today-date").innerText = `${dayName} ${jalali[2]} ${monthNames[jalali[1] - 1]} ${jalali[0]}`;
-// بارگذاری JSON
-fetch('/static/Js/data/home.json')
-    .then(res => res.json())
-    .then(data => {
-        // عنوان صفحه
-        document.getElementById("page-title").innerText = data.home.title;
+const todayElement = document.getElementById("today-date");
+if (todayElement) {
+    const today = new Date();
+    const jalali = gregorianToJalali(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+    const weekdays = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
+    todayElement.innerText = `${weekdays[today.getDay()]} ${jalali[2]} ${monthNames[jalali[1] - 1]} ${jalali[0]}`;
+}
 
-        // پر کردن فوتر
-        const footerContainer = document.getElementById("footer-dynamic");
+const footerContainer = document.getElementById("footer-dynamic");
+if (footerContainer) {
+    fetch('/static/Js/data/home.json')
+        .then(res => res.json())
+        .then(data => {
+            const isHome = document.body.id === 'home';
+            if (isHome && document.getElementById("page-title")) {
+                document.getElementById("page-title").innerText = data.home.title;
+            }
 
-        // آخرین ارسالی‌ها
-        const colLatest = document.createElement("div");
-        colLatest.className = "col-lg-4 col-sm-6 py-3 order-lg-1 order-1 pl-lg-2";
-        colLatest.innerHTML = `<h5 class="IRANSansWeb_Medium">آخرین ارسالی ها :</h5>`;
-        const ulLatest = document.createElement("ul");
-        data.home.footer.latest.forEach(f => {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = f.link;
-            a.textContent = f.title;
-            li.appendChild(a);
-            ulLatest.appendChild(li);
-        });
-        colLatest.appendChild(ulLatest);
-        footerContainer.appendChild(colLatest);
+            const colLatest = document.createElement("div");
+            colLatest.className = "col-lg-4 col-sm-6 py-3";
+            colLatest.innerHTML = `<h5 class="IRANSansWeb_Medium">آخرین ارسالی ها :</h5>`;
+            const ulLatest = document.createElement("ul");
+            data.home.footer.latest.forEach(f => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="${f.link}">${f.title}</a>`;
+                ulLatest.appendChild(li);
+            });
+            colLatest.appendChild(ulLatest);
+            footerContainer.appendChild(colLatest);
 
-        // لینک‌های سریع
-        const colQuick = document.createElement("div");
-        colQuick.className = "col-lg-2 col-sm-6 py-3 order-lg-1 order-1";
-        colQuick.innerHTML = `<h5 class="IRANSansWeb_Medium">لینک های سریع :</h5>`;
-        const ulQuick = document.createElement("ul");
-        data.home.footer.quickLinks.forEach(f => {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = f.link;
-            a.textContent = f.title;
-            li.appendChild(a);
-            ulQuick.appendChild(li);
-        });
-        colQuick.appendChild(ulQuick);
-        footerContainer.appendChild(colQuick);
+            const colQuick = document.createElement("div");
+            colQuick.className = "col-lg-2 col-sm-6 py-3";
+            colQuick.innerHTML = `<h5 class="IRANSansWeb_Medium">لینک های سریع :</h5>`;
+            const ulQuick = document.createElement("ul");
+            data.home.footer.quickLinks.forEach(f => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="${f.link}">${f.title}</a>`;
+                ulQuick.appendChild(li);
+            });
+            colQuick.appendChild(ulQuick);
+            footerContainer.appendChild(colQuick);
 
-        // پیوندها
-        const colLinks = document.createElement("div");
-        colLinks.className = "col-lg-2 col-sm-6 py-3 order-lg-2 order-3";
-        colLinks.innerHTML = `<h5 class="IRANSansWeb_Medium">پیوندها :</h5>`;
-        const ulLinks = document.createElement("ul");
-        data.home.footer.links.forEach(f => {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = f.link;
-            a.textContent = f.title;
-            li.appendChild(a);
-            ulLinks.appendChild(li);
-        });
-        colLinks.appendChild(ulLinks);
-        footerContainer.appendChild(colLinks);
-
-        // ارتباط با ما
-        const colContact = document.createElement("div");
-        colContact.className = "col-lg-4 col-sm-6 pr-lg-4 py-3 IRANSansWeb_FaNum order-lg-3 order-2";
-        const c = data.home.footer.contact;
-        colContact.innerHTML = `<h5 class="IRANSansWeb_Medium">ارتباط با ما :</h5>
-                <p><i class="fas fa-2x fa-map-marker-alt ml-2"></i>آدرس : ${c.address}</p>
-                <p><i class="fas fa-2x fa-phone ml-2"></i>تلفن : ${c.phone}</p>
-                <p><i class="fas fa-2x fa-mobile-alt ml-2"></i>تلفن همراه : ${c.mobile}</p>
-                <p><i class="fas fa-2x fa-fax ml-2"></i>نمابر : ${c.fax}</p>`;
-        footerContainer.appendChild(colContact);
-
-    })
-    .catch(err => console.error("خطا در دریافت داده‌ها:", err));
+            const colContact = document.createElement("div");
+            colContact.className = "col-lg-6 col-sm-12 py-3";
+            const c = data.home.footer.contact;
+            colContact.innerHTML = `<h5 class="IRANSansWeb_Medium">ارتباط با ما :</h5>
+                    <p>آدرس : ${c.address}</p>
+                    <p>تلفن : ${c.phone}</p>
+                    <p>تلفن همراه : ${c.mobile}</p>
+                    <p>نمابر : ${c.fax}</p>`;
+            footerContainer.appendChild(colContact);
+        })
+        .catch(err => console.error("خطا در دریافت داده‌ها:", err));
+}

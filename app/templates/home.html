@@ -60,12 +60,12 @@
         {% for servic in services %}
             <div class="card mx-2 my-3">
                 <div class="card-body">
-                    <a href="{{ servic.detail_link or '#' }}">
+                    <a href="{{ url_for('routeapi.service_detail', service_id=servic.id) }}">
                         <img class="rounded-circle" src="{{ url_for('static', filename=servic.image_url) }}" alt="">
                     </a>
                     <h6>{{servic.title}}</h6>
                     <p>{{servic.short_description}}</p>
-                    <a href="{{ servic.detail_link or '#' }}" class="btn btn-grad px-5 text-white mt-2 rad25">مشاهده</a>
+                    <a href="{{ url_for('routeapi.service_detail', service_id=servic.id) }}" class="btn btn-grad px-5 text-white mt-2 rad25">مشاهده</a>
                 </div>
             </div>
         {% endfor %}
@@ -91,10 +91,10 @@
                         <li>
                             <div class="row">
                                 <div class="col-lg-2 col-md-3">
-                                    <a href="{{ new.attachment_url or '#' }}"><img src="{{ url_for('static', filename=new.image_url) }}" class="img-fluid"></a>
+                                    <a href="{{ url_for('routeapi.news_detail', news_id=new.id) }}"><img src="{{ url_for('static', filename=new.image_url) }}" class="img-fluid"></a>
                                 </div>
                                 <div class="col-lg-10 col-md-9">
-                                    <a href="{{ new.attachment_url or '#' }}">
+                                    <a href="{{ url_for('routeapi.news_detail', news_id=new.id) }}">
                                         <h2>
                                             {{ new.title }}
                                         </h2>
@@ -132,7 +132,7 @@
 
         {% for new in news_list %}
             <div class="card my-3 mx-2">
-                <a href="{{ new.attachment_url or '#' }}" class="relative">
+                <a href="{{ url_for('routeapi.news_detail', news_id=new.id) }}" class="relative">
                     <img src="{{ url_for('static', filename=new.image_url) }}" class="mb-3 img-fluid rad12" />
                     <div class="covernews d-flex flex-row justify-content-between px-3 text-white IRANSansWeb_Medium ">
                         <span class="bottom_p"><i class="fas fa-clock ml-1"></i>{{ new.published_date.strftime('%Y/%m/%d') }}</span>
@@ -140,12 +140,12 @@
                     </div>
                 </a>
 
-                <a href="{{ new.attachment_url or '#' }}">
+                <a href="{{ url_for('routeapi.news_detail', news_id=new.id) }}">
                     <h2>{{ new.title }}</h2>
                 </a>
                 <p>{{ new.short_description | truncate(180, False, '...') }}</p>
 
-                <a href="{{ new.attachment_url or '#' }}" class="text-danger IRANSansWeb_Medium mb-3">مشاهده خبر »</a>
+                <a href="{{ url_for('routeapi.news_detail', news_id=new.id) }}" class="text-danger IRANSansWeb_Medium mb-3">مشاهده خبر »</a>
             </div>
         {% endfor %}
 
@@ -175,5 +175,38 @@
     </div>
 </section>
 
+
+
+<section class="container my-4">
+    <div class="row">
+        <div class="col-lg-6 mb-3">
+            <h5 class="IRANSansWeb_Medium bt-color">پیوندهای مرتبط</h5>
+            <ul class="list-group">
+                {% for link in related_links %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>{{ link.title }}</span>
+                    <a href="{{ link.url }}" target="_blank" rel="noopener">مشاهده</a>
+                </li>
+                {% else %}
+                <li class="list-group-item">موردی ثبت نشده است.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-lg-6 mb-3">
+            <h5 class="IRANSansWeb_Medium bt-color">شعب و راه‌های ارتباطی</h5>
+            <ul class="list-group">
+                {% for branch in branches %}
+                <li class="list-group-item">
+                    <strong>{{ branch.name }}</strong><br>
+                    <small>{{ branch.address }}</small><br>
+                    <span>تلفن: {{ branch.phone }} | موبایل: {{ branch.mobile }}</span>
+                </li>
+                {% else %}
+                <li class="list-group-item">موردی ثبت نشده است.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
