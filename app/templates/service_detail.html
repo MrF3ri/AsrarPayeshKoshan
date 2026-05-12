@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block container %}
+<section class="container mt-4">
+  <h3>{{ service.title }}</h3>
+  {% if service.image_url %}<img class="img-fluid my-3" src="{{ url_for('static', filename=service.image_url) }}">{% endif %}
+  <p>{{ service.full_description or service.short_description }}</p>
+  <hr><h6>سایر خدمات</h6>
+  <ul>{% for item in related_services %}<li><a href="{{ url_for('routeapi.service_detail', service_id=item.id) }}">{{ item.title }}</a></li>{% endfor %}</ul>
+</section>
+{% endblock %}
