@@ -9,9 +9,16 @@ def Home():
     team = TeamMember.query.filter_by(active=True).order_by(TeamMember.display_order).all()
     branches = CompanyBranch.query.filter_by(active=True).all()
     related_links = RelatedLink.query.filter_by(active=True).all()
-    print(sliders[0].image_url)
+    
+    # اصلاح خط پایین - بررسی وجود اسلایدر قبل از چاپ
+    if sliders:
+        print(sliders[0].image_url)
+    else:
+        print("هیچ اسلایدری وجود ندارد!")
+    
     print(banners)
     print("=========================")
+    
     return render_template(
         "home.html",
         sliders=sliders,

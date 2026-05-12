@@ -1,0 +1,113 @@
+{% extends "admin/base.html" %}
+
+{% block title %}داشبورد{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4">داشبورد مدیریت</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="stat-number">{{ total_news }}</div>
+                <div class="stat-label">اخبار</div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="stat-number">{{ total_services }}</div>
+                <div class="stat-label">خدمات</div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number">{{ total_team }}</div>
+                <div class="stat-label">اعضای تیم</div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <div class="icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="stat-number">{{ total_sliders }}</div>
+                <div class="stat-label">اسلایدرها</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="stat-card text-center">
+                <div class="icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <div class="stat-number">{{ total_banners }}</div>
+                <div class="stat-label">بنرها</div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="stat-card text-center">
+                <div class="icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="stat-number">{{ total_branches }}</div>
+                <div class="stat-label">شعبات</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">آخرین اخبار</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>عنوان</th>
+                                    <th>تاریخ انتشار</th>
+                                    <th>بازدید</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for news in recent_news %}
+                                <tr>
+                                    <td>{{ news.title }}</td>
+                                    <td>{{ news.published_date.strftime('%Y-%m-%d') if news.published_date else '-' }}</td>
+                                    <td>{{ news.views }}</td>
+                                    <td>
+                                        {% if news.active %}
+                                        <span class="badge bg-success">فعال</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">غیرفعال</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
