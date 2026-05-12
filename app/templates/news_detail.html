@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block container %}
+<section class="container mt-4">
+  <h3>{{ news.title }}</h3>
+  {% if news.image_url %}<img class="img-fluid my-3" src="{{ url_for('static', filename=news.image_url) }}">{% endif %}
+  <p>{{ news.full_description or news.short_description }}</p>
+  <hr><h6>آخرین اخبار</h6>
+  <ul>{% for item in latest_news %}<li><a href="{{ url_for('routeapi.news_detail', news_id=item.id) }}">{{ item.title }}</a></li>{% endfor %}</ul>
+</section>
+{% endblock %}

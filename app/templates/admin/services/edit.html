@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h4>ویرایش خدمت</h4>
+<form method="post" enctype="multipart/form-data">{{ form.hidden_tag() }}
+{{ form.title.label }}{{ form.title(class_='form-control') }}
+{{ form.short_description.label }}{{ form.short_description(class_='form-control') }}
+{{ form.full_description.label }}{{ form.full_description(class_='form-control') }}
+{{ form.detail_link.label }}{{ form.detail_link(class_='form-control') }}
+{{ form.image.label }}{{ form.image(class_='form-control') }}
+{{ form.image_url.label }}{{ form.image_url(class_='form-control') }}
+<div class='mt-2'>{{ form.active() }} {{ form.active.label }}</div>
+{{ form.submit(class_='btn btn-primary mt-3') }}
+</form>
+{% endblock %}
