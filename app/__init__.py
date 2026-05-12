@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -10,8 +11,8 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__)
     
-    app.config['SECRET_KEY'] = 'your-secret-key-here-change-it'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://phpmyadmin:sudoferi@localhost/asrarPayeshKoshan'
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'change-me-in-production')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:////data/app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)

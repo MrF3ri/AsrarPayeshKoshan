@@ -79,9 +79,6 @@ def news_list():
 @routeapi.route("/news/<int:news_id>")
 def news_detail(news_id):
     news = News.query.get_or_404(news_id)
-    if not news.active:
-        abort(404)
-
     news.views = (news.views or 0) + 1
     db.session.commit()
 
@@ -105,7 +102,5 @@ def services_list():
 @routeapi.route("/services/<int:service_id>")
 def service_detail(service_id):
     service = Service.query.get_or_404(service_id)
-    if not service.active:
-        abort(404)
     related_services = Service.query.filter(Service.active.is_(True), Service.id != service.id).limit(4).all()
     return render_template("service_detail.html", service=service, related_services=related_services, page_id="services")
