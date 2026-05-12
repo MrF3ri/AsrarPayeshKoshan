@@ -1,0 +1,16 @@
+services:
+  asrar-app:
+    build: .
+    container_name: asrar-app
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=change-this
+      - DATABASE_URL=sqlite:////data/app.db
+    volumes:
+      - asrar_data:/data
+      - asrar_uploads:/app/app/static/uploads
+    restart: unless-stopped
+volumes:
+  asrar_data:
+  asrar_uploads:

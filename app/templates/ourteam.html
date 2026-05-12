@@ -27,7 +27,7 @@
             {% for member in team_members %}
             <div class="col-lg-3 col-sm-6 mb-4">
                 <div class="card">
-                    <img src="{{ url_for('static', filename=member.image_url) }}" alt="{{ member.name }}" />
+                    <img src="{{ url_for('static', filename=member.image_url) if member.image_url else url_for('static', filename='Images/avatar.jpg') }}" alt="{{ member.name }}" />
                     <div class="data">
                         <h6 class="IRANSansWeb_Medium">{{ member.name }}</h6>
                         <span>{{ member.position }}</span>

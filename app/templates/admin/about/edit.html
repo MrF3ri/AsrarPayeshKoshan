@@ -1,0 +1,1 @@
+{% extends 'admin/base.html' %}{% block content %}<h4>درباره ما</h4><form method='post' enctype='multipart/form-data'>{{ form.hidden_tag() }}{% for field in form if field.name not in ['csrf_token'] %}<div class='mb-2'>{{ field.label }}{{ field(class_='form-control') }}</div>{% endfor %}<button class='btn btn-primary'>ذخیره</button></form>{% endblock %}
