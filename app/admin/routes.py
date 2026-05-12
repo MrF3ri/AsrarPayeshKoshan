@@ -177,7 +177,13 @@ def news_edit(id):
         news.short_description = form.short_description.data
         news.full_description = form.full_description.data
         news.attachment_url = form.attachment_url.data
-        news.published_date = form.published_date.data
+        try:
+            news.published_date = datetime.strptime(form.published_date.data, '%Y-%m-%dT%H:%M')
+        except (ValueError, TypeError):
+            try:
+                news.published_date = datetime.strptime(form.published_date.data, '%Y-%m-%d %H:%M:%S')
+            except (ValueError, TypeError):
+                news.published_date = datetime.now()
         news.views = form.views.data
         news.active = form.active.data
         

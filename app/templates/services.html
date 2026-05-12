@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block container %}
+<section class="container mt-4">
+  <h4 class="bt-color">خدمات ما</h4>
+  <div class="row">
+  {% for service in services %}
+    <div class="col-md-4">
+      <div class="card my-3 p-3">
+        <h6>{{ service.title }}</h6>
+        <p>{{ service.short_description }}</p>
+        <a href="{{ url_for('routeapi.service_detail', service_id=service.id) }}" class="btn btn-grad text-white">مشاهده</a>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</section>
+{% endblock %}
