@@ -1,16 +1,35 @@
+version: "3.8"
+
 services:
   asrar-app:
     build: .
-    container_name: asrar-app
+    image: asrar-app
+    container_name: asrar
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"
     environment:
       - SECRET_KEY=change-this
-      - DATABASE_URL=sqlite:////data/app.db
+      - DATABASE_URL=mysql+pymysql://myuser:sudof3ri@mariadb:3306/asrar
     volumes:
       - asrar_data:/data
       - asrar_uploads:/app/app/static/uploads
     restart: unless-stopped
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: docker.arvancloud.ir/mariadb:11
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sudoferi
+      MYSQL_DATABASE: asrar
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: sudof3ri
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
 volumes:
   asrar_data:
   asrar_uploads:
+  mariadb_data:

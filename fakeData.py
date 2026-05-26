@@ -252,5 +252,3 @@ def main():
     db.session.commit()
     print("✅ عملیات با موفقیت انجام شد! Fake data با موفقیت وارد دیتابیس شد.")
 
-if __name__ == "__main__":
-    main()
